@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @post.name %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @post.content %>
+</p>
+<% if Like.where(user_id: current_user.id, post_id: @post.id).present? %>
+<%= link_to 'Dislike', "/dislike/#{@post.id}/#{Like.where(user_id: current_user.id, post_id: @post.id).last.id}" %>
+<% else %>	
+	<%= button_to 'Like', post_likes_path(@post), method: :post %>
+<% end %>	
+<p><%= @post.likes.count %> <%= (@post.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
